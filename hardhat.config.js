@@ -20,6 +20,7 @@ setGlobalDispatcher(proxyAgent);
 
 // 从环境变量中获取私钥和rpc地址
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || "https://eth-sepolia.g.alchemy.com/v2/YOUR-API-KEY";
+const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || "https://eth-mainnet.alchemyapi.io/v2/YOUR-API-KEY";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "private key";
 const ETHER_SCAN_API_KEY = process.env.ETHER_SCAN_API_KEY || "ether scan api key";
 
@@ -32,6 +33,9 @@ module.exports = {
 	networks: {
 		hardhat: {
 			chainId: 31337,
+			forking: {
+				url: MAINNET_RPC_URL,
+			},
 			blockConfirmation: 1,
 		},
 		local: {
