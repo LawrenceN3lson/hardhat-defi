@@ -21,6 +21,7 @@ setGlobalDispatcher(proxyAgent);
 // 从环境变量中获取私钥和rpc地址
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || "https://eth-sepolia.g.alchemy.com/v2/YOUR-API-KEY";
 const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || "https://eth-mainnet.alchemyapi.io/v2/YOUR-API-KEY";
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || "https://eth-goerli.alchemyapi.io/v2/YOUR-API-KEY";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "private key";
 const ETHER_SCAN_API_KEY = process.env.ETHER_SCAN_API_KEY || "ether scan api key";
 
@@ -48,6 +49,12 @@ module.exports = {
 			accounts: [PRIVATE_KEY],
 			chainId: 11155111,
 			blockConfirmation: 6, // 6个区块确认
+		},
+		goerli: {
+			url: GOERLI_RPC_URL,
+			accounts: [PRIVATE_KEY],
+			chainId: 5,
+			blockConfirmations: 6,
 		},
 	},
 	namedAccounts: {

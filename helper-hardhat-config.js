@@ -14,6 +14,17 @@ const networkConfig = {
 		daiEthPriceFeed: "0x14866185B1962B63C3Ea9E03Bc1da838bab34C19",
 		daiToken: "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD",
 	},
+	5: {
+		name: "goerli",
+		ethUsdPriceFeed: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
+		wethToken: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+		// This is the AaveV2 Lending Pool Addresses Provider
+		lendingPoolAddressesProvider: "0x5E52dEc931FFb32f609681B8438A51c675cc232d",
+		// This is LINK/ETH feed
+		daiEthPriceFeed: "0xb4c4a493AB6356497713A78FFA6c60FB53517c63",
+		// This is the LINK token
+		daiToken: "0x326C977E6efc84E512bB9C30f76E30c160eD06FB",
+	},
 };
 
 const developmentChains = ["hardhat", "localhost"];

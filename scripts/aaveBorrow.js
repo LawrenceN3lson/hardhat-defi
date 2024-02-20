@@ -1,7 +1,10 @@
 const { duration } = require("@nomicfoundation/hardhat-network-helpers/dist/src/helpers/time");
 const { getWeth, AMOUNT } = require("../scripts/getWeth");
 const { ethers, network } = require("hardhat");
+const { networkConfig } = require("../helper-hardhat-config");
+
 const BORROW_MODE = 2; // Variable borrow mode. Stable was disabled.
+const { chainId } = network.config;
 
 async function main() {
 	await getWeth();
@@ -9,8 +12,8 @@ async function main() {
 	// 获取可交互借贷池合约
 	const lendingPool = await getLendingPool(signer);
 	const lendingPoolAddress = await lendingPool.getAddress();
-	const wethAddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
-	const daiAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
+	const wethAddress = networkConfig[chainId].wethToken;
+	const daiAddress = networkConfig[chainId].daiToken;
 	// Approve 批准借贷池可以转移代币
 	await approveErc20(wethAddress, lendingPoolAddress, AMOUNT, signer);
 	// Deposit 把这些代币作为抵押品存入借贷池
@@ -49,7 +52,7 @@ async function borrowDai(daiAddress, lendingPool, amountDaiToBorrow, account) {
 
 // 为了知道可以借多少DAI, 需要知道DAI的价格
 async function getDAIPrice() {
-	const daiEthPriceFeed = await ethers.getContractAt("AggregatorV3Interface", "0x773616E4d11A78F511299002da57A0a94577F1f4");
+	const daiEthPriceFeed = await ethers.getContractAt("AggregatorV3Interface", networkConfig[chainId].daiEthPriceFeed);
 	const daiEthPrice = (await daiEthPriceFeed.latestRoundData())[1];
 	console.log(`DAI/ETH price: ${daiEthPrice}`);
 	return daiEthPrice;
@@ -74,7 +77,7 @@ async function approveErc20(erc20Address, spenderAddress, amount, signer) {
 async function getLendingPool(account) {
 	const lendingPoolAddressesProvider = await ethers.getContractAt(
 		"ILendingPoolAddressesProvider",
-		"0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5",
+		networkConfig[chainId].lendingPoolAddressesProvider,
 		account,
 	);
 	const lendingPoolAddress = await lendingPoolAddressesProvider.getLendingPool();
