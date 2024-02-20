@@ -27,7 +27,7 @@ const ETHER_SCAN_API_KEY = process.env.ETHER_SCAN_API_KEY || "ether scan api key
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
 	solidity: {
-		compilers: [{ version: "0.8.19" }, { version: "0.4.19" }],
+		compilers: [{ version: "0.8.19" }, { version: "0.4.19" }, { version: "0.6.12" }],
 	},
 	defaultNetwork: "hardhat",
 	networks: {

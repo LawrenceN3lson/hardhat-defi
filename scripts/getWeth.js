@@ -1,5 +1,5 @@
 const { getNamedAccounts, ethers } = require("hardhat");
-const AMOUNT = ethers.parseEther("0.02");
+const AMOUNT = ethers.parseEther("0.05");
 // 进行抵押，把 eth 换成 weth
 async function getWeth() {
 	const { deployer } = await getNamedAccounts();
@@ -12,4 +12,4 @@ async function getWeth() {
 	const wethBalance = await iWeth.balanceOf(deployer);
 	console.log("wethBalance: ", wethBalance.toString());
 }
-module.exports = { getWeth };
+module.exports = { getWeth, AMOUNT };
