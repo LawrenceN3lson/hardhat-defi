@@ -1,3 +1,4 @@
+const { duration } = require("@nomicfoundation/hardhat-network-helpers/dist/src/helpers/time");
 const { getWeth, AMOUNT } = require("../scripts/getWeth");
 const { ethers, network } = require("hardhat");
 const BORROW_MODE = 2; // Variable borrow mode. Stable was disabled.
@@ -23,6 +24,20 @@ async function main() {
 	console.log(`You can borrow ${amountDaiToBorrow} DAI.`);
 	const amountDaiWei = ethers.parseEther(amountDaiToBorrow.toString());
 	// Borrow 借贷
+	await borrowDai(daiAddress, lendingPool, amountDaiWei, signer);
+	await getBorrowUserData(lendingPool, signer);
+
+	// Repay 还款
+	await repayDai(daiAddress, lendingPool, amountDaiWei, signer);
+	await getBorrowUserData(lendingPool, signer);
+}
+
+async function repayDai(daiAddress, lendingPool, amountDaiToRepay, account) {
+	const lendingPoolAddress = await lendingPool.getAddress();
+	await approveErc20(daiAddress, lendingPoolAddress, amountDaiToRepay, account);
+	const repayTx = await lendingPool.repay(daiAddress, amountDaiToRepay, BORROW_MODE, account);
+	await repayTx.wait(1);
+	console.log("You've repaid!");
 }
 
 // 借贷 DAI
