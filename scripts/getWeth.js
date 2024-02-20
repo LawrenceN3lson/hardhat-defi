@@ -10,8 +10,8 @@ async function getWeth() {
 	// 因此需要合约 abi, address
 	const iWeth = await ethers.getContractAt("IWeth", networkConfig[chainId].wethToken, signer);
 	const tx = await iWeth.deposit({ value: AMOUNT });
-	await tx.wait();
-	const wethBalance = await iWeth.balanceOf(deployer);
+	await tx.wait(1, 120000);
+	const wethBalance = await iWeth.balanceOf(signer);
 	console.log("wethBalance: ", wethBalance.toString());
 }
 module.exports = { getWeth, AMOUNT };
